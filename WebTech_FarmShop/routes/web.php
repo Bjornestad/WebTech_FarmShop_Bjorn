@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\BuyController;
 use App\Http\Controllers\HomeController;
@@ -47,7 +48,12 @@ Route::middleware(['auth'])->group(function (){
         return view('basket');
     })->name("basket");
     Route::get('/Stock/{id}', 'ItemController@getItem')->name('get.item');
+    Route::get('/buyAjax', [AjaxController::class,'getBuyAjaxPage'])->name("buyAjax");
+
+    //Route::get('/get-products','AjaxController@returnAjax')->name('get-products');
+
 });
+
 
 Route::get('/', function () {
     return view('home');
@@ -73,6 +79,8 @@ Route::get('/about', function () {
     return view('about');
 })->name("about");
 
+//Route without Auth, not good but works #todo figure out why it doesnt work with auth
+Route::namespace('App\Http\Controllers')->group(function () { Route::get('/get-products','AjaxController@returnAjax')->name('get-products');});
 
 
 
