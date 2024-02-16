@@ -4,6 +4,7 @@
     <script defer src="{{asset('js/cookieManager.js')}}"></script>
     <script defer src="{{asset('js/ajax.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @endsection
 
 
@@ -17,6 +18,7 @@
 
 
 @section('main')
+    {{-- just here to test, moved to actual js file
     <script>
         $(document).ready(function (){
             $('#getProductList').click(function (){
@@ -42,6 +44,8 @@
             });
         });
     </script>
+    --}}
+
     <div>
         <h1>Buy Local Organic Products</h1>
 
@@ -54,6 +58,9 @@
             <div id="productList"></div>
             <button id="getProductList">Get products</button>
 
+            <form>
+                
+            </form>
 
         </div>
     </div>

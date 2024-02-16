@@ -1,4 +1,5 @@
-function getProductList(){
+
+/*function getProductList(){
     $(document).ready(function (){
         $('#getProductList').click(function (){
             $.ajax({
@@ -6,6 +7,8 @@ function getProductList(){
                 type: 'GET',
                 dataType: 'json',
                 success: function (response){
+                    console.log(response);
+
                     var products = response.products;
                     var productList = $('#productList');
                     productList.empty();
@@ -21,3 +24,30 @@ function getProductList(){
         });
     });
 }
+
+ */
+
+
+$(document).ready(function (){
+    $('#getProductList').click(function (){
+        $.ajax({
+            url: '/get-products',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response){
+                console.log(response);
+
+                var products = response.products;
+                var productList = $('#productList');
+                productList.empty();
+
+                products.forEach(function (product){
+                    productList.append('<p>' + product.name + '</p>');
+                });
+            },
+            error: function (xhr, status, error){
+                console.error(error);
+            }
+        });
+    });
+});
