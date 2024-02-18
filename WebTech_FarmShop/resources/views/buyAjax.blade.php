@@ -50,6 +50,10 @@
         <h1>Buy Local Organic Products</h1>
 
         <div class="buy-main">
+            {{--
+            This loads the initial n products, where n is chosen in the AjaxController, if
+            it isnt limited, it will just load all products, which isnt really wanted
+            --}}
             @foreach($SENDSTUFF as $product)
                 @include('components.product-card', [
                     'productTitle' => ucfirst(str_replace('_', ' ', $product->name)),
@@ -59,21 +63,28 @@
                     'product' => $product
                 ])
             @endforeach
-<div>
-                <div id="productList"></div>
+            <div>
+    {{--
+    Div and button for loading more products beyong the initial n that is there on start up
+    loadMore calls the ajax function in Ajax.js, which then request data from the database through
+    the AjaxController method LimitShowing
+    --}}
+                <div class="buy-main" id="productList"></div>
 
                 <button id="loadMore">Load more products</button>
-</div>
+            </div>
 
         </div>
     </div>
+
     <div>
-
-
-
-
-        <input type="text" id="search" placeholder="search">
-        <div id="search"></div>
+{{--
+        The names of the product currently go by database name and not "screen name"
+        meaning that if you want to search for Beef Sausage it has to be beef_sausage
+        as that is its name in the database
+--}}
+        <input type="text" id="searchField" placeholder="search">
+        <div id="productList"></div>
     </div>
 
 

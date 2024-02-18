@@ -14,6 +14,10 @@ $(document).ready(function() {
                 offset += 6;
                 console.log(response);
 
+                if(response.SENDSTUFF.length ===0){
+                    $('#loadMore').hide();
+                }
+
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -25,47 +29,18 @@ $(document).ready(function() {
 
 
 
-
-//ajax thing for retrieving productsd on button pressed, this is the bad one
-/*
-$(document).ready(function (){
-    $('#getProductList').click(function (){
-        $.ajax({
-            url: '/get-products',
-            type: 'GET',
-            dataType: 'json',
-            success: function (response){
-                console.log(response);
-
-                var products = response.products;
-                var productList = $('#productList');
-                productList.empty();
-
-                products.forEach(function (product){
-                    productList.append('<p>' + product.name + '</p>');
-                });
-            },
-            error: function (xhr, status, error){
-                console.error(error);
-            }
-        });
-    });
-});
-*/
 //ajax for searching for products
 $(document).ready(function() {
-    $('#search').on('keyup', function() {
-        let query = $(this).val();
+    $('#searchField').on('keyup', function() {
+        var query = $(this).val();
         $.ajax({
             url: "/search",
             type: "GET",
-            data: {query: query},
+            data: {query:query},
             success: function(data){
-                // Display search results
-                $('#search').html(data);
-                //print search in console for reasons yes
+                $('#productList').html(data.html);
                 console.log(query)
             }
-        })
+        });
     });
 });

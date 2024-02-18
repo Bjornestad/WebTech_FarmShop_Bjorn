@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
+use http\Env\Response;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
@@ -14,36 +15,25 @@ use Illuminate\Support\Facades\Log;
 class AjaxController extends Controller
 {
     use AuthorizesRequests, ValidatesRequests;
-
+/*
     public function getBuyAjaxPage()
     {
         $products = Product::take(3)->get();
-        /*
-        $products = Product::with('pictures')->get();
-        $order = Order::with('product')->get();
-        error_log($order);
-        foreach ($order as $i) {
-            error_log("hello " . $order);
-        }
 
-      error_log("h");
- */
         return view('buyAjax', ['data' => $products]);
 
     }
-/*
-    public function returnAjax()
-    {
-        try {
-            $products = Product::all();
-            Log::info('Products: ', ['products' => $products]); // new logging statement
-
-            return response()->json(['products' => $products]);
-        } catch (\Exception $e) {
-            Log::error('Error fetching products: ', ['error' => $e->getMessage()]); // new logging statement
-        }
-    }
 */
+    /*
+     * Function for getting data from database, only sends 3 at beginning
+     * to not load everything, whole lotta duplicate data because only like
+     * 6 products
+     * Also loads all the data into the product-card, i have no idea if this
+     * is bad practise or not, but it made the rendering work so eh?
+     *
+     * Only sends ajax data if the button is clicked, otherwise works as normal
+     * request view method
+     * */
     public function limitShowing(Request $request)
     {
         $offset = $request->input('offset', 0);
@@ -68,51 +58,26 @@ class AjaxController extends Controller
         //return view('buyAjax', compact('products'));
     }
 
-    /*    public function search(Request $request)
-        {
-            $query = $request->input('query');
-            $products = Product::where('name', 'LIKE', "%{$query}%")->get();
 
-            return view('search', compact('products'));
-        }
-    */
-    /*
-
-        public function search(Request $request)
-        {
-            $query = $request->input('query');
-            $products = Product::where('name', 'LIKE', "%{$query}%")->get();
-
-            // Returning the HTML content
-            $response = '';
-            foreach ($products as $product) {
-                $response .= view('components.product-card-ajax', compact('product'))->render();
-            }
-
-        }
-    }
-
-    */
 
     public function search(Request $request)
     {
-        $search = $request->input('search');
+        $userInput = $request->query('query', '');
 
-        $products = Product::where('name','like','%'.$search.'%')->paginate(5);
+        if ($userInput === '') {
+            return response()->json(['html' => '']);
+        }
 
-        $view = view('components.product-card', compact('products'))->render();
+        $products = Product::where('name', 'like', '%' . $userInput . '%')->get();
 
-        $pagination = $products->links('pagination.custom')->render();
+        if (count($products) === 0) {
+            return response()->json(['html' => '<p>No products found.</p>']);
+        }
 
-        return response()->json(['view' => $view, 'pagination' => $pagination]);
+        $view = '';
 
-
-        /*
-        $query = $request->input('query');
-        $products = Product::where('name', 'LIKE', "%{$query}%")->get();
-        $response = '';
         foreach ($products as $product) {
-            $response .= view('components.product-card', [
+            $view .= view('components.product-card', [
                 'productTitle' => ucfirst(str_replace('_', ' ', $product->name)),
                 'src' => asset('images/' . $product->pictures->fileName . $product->pictures->fileExtension),
                 'productInput' => $product->name . '-input',
@@ -120,7 +85,7 @@ class AjaxController extends Controller
                 'product' => $product
             ])->render();
         }
-        */
+        return response()->json(['html'=>$view]);
     }
 }
 
