@@ -50,20 +50,32 @@
         <h1>Buy Local Organic Products</h1>
 
         <div class="buy-main">
-
-            @foreach($data as $item)
-                @include("components.product-card", ['productTitle'=>ucfirst(str_replace('_',' ',$item->name)),'src' => asset('images/' . $item->pictures->fileName . $item->pictures->fileExtension), 'productInput' => $item->name . '-input', 'productDescription' => $item->description,'product'=>$item])
+            @foreach($SENDSTUFF as $product)
+                @include('components.product-card', [
+                    'productTitle' => ucfirst(str_replace('_', ' ', $product->name)),
+                    'src' => asset('images/' . $product->pictures->fileName . $product->pictures->fileExtension),
+                    'productInput' => $product->name . '-input',
+                    'productDescription' => $product->description,
+                    'product' => $product
+                ])
             @endforeach
+<div>
+                <div id="productList"></div>
 
-            <div id="productList"></div>
-            <button id="getProductList">Get products</button>
-
-            <form>
-                
-            </form>
+                <button id="loadMore">Load more products</button>
+</div>
 
         </div>
     </div>
+    <div>
+
+
+
+
+        <input type="text" id="search" placeholder="search">
+        <div id="search"></div>
+    </div>
+
 
 @endsection
 
