@@ -72,50 +72,53 @@ $(document).ready(function() {
     });
 });
 */
+var offset = 6;
 
-//ajax for actually incrementing amount of products showed
-$(document).ready(function() {
-    var offset = 6;
-
-    // Load More Handler
-    $(document).on('click', '#loadMore', function() {
+$(document).ready(function () {
+    $(document).on('click', '#loadMore', function () {
         $.ajax({
             url: '/buyAjax',
             type: 'GET',
-            data: { offset: offset },
-            success: function(response){
+            data: {offset: offset},
+            success: function (response) {
                 $('#productList').append(response.html);
                 offset += 6;
+                console.log(response);
+                console.log(offset)
 
-                if(response.SENDSTUFF.length ===0){
+                if (response.SENDSTUFF.length === 0) {
                     $('#loadMore').hide();
                 }
+
             },
             error: function (xhr, status, error) {
                 console.error(error);
             }
         });
     });
+});
 
-    // Search Handler
-    $('#searchField').on('keyup', function() {
+$(document).ready(function () {
+    var initialSearchedProducts = $('#initialList').html();
+    $('#searchField').on('keyup', function () {
         var query = $(this).val();
-        if(query) {
+        if (query) {
             $.ajax({
                 url: "/search",
                 type: "GET",
-                data: {query:query},
-                success: function(data){
-                    $('#productList').html(data.html);
-                    $('#loadMore').hide();
+                data: {query: query},
+                success: function (data) {
+                    $('#initialList').html("");
+                    $('#productList').html(data.html).fadeIn();
+                    console.log(query);
                 }
             });
-        } else {
-            // When search is cleared, reload the initial products
-            $('#loadMore').show();
+        } else if ($('#searchField').empty()) {
             $('#productList').html("");
+            $('#initialList').html(initialSearchedProducts);
+            $('#loadMore').show();
             offset = 6;
-            $('#loadMore').trigger('click'); // Trigger the load more click event to get initial products
+            console.log("i got to here")
         }
     });
 });

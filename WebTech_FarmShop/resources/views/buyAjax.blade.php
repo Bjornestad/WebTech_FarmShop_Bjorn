@@ -19,33 +19,6 @@
 
 
 @section('main')
-    {{-- just here to test, moved to actual js file
-    <script>
-        $(document).ready(function (){
-            $('#getProductList').click(function (){
-                $.ajax({
-                    url: '/get-products',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response){
-                        console.log(response);
-
-                        var products = response.products;
-                        var productList = $('#productList');
-                        productList.empty();
-
-                        products.forEach(function (product){
-                            productList.append('<p>' + product.name + '</p>');
-                        });
-                    },
-                    error: function (xhr, status, error){
-                        console.error(error);
-                    }
-                });
-            });
-        });
-    </script>
-    --}}
 
     <div>
         <h1>Buy Local Organic Products</h1>
@@ -56,7 +29,6 @@
                     as that is its name in the database
             --}}
             <input type="text" id="searchField" class="searchAjax" placeholder="search">
-            <div id="productList" class="buy-main"></div>
         </div>
         <div class="buy-main" id="initialList">
 
@@ -74,21 +46,18 @@
                 ])
             @endforeach
             <div>
-    {{--
-    Div and button for loading more products beyong the initial n that is there on start up
-    loadMore calls the ajax function in Ajax.js, which then request data from the database through
-    the AjaxController method LimitShowing
-    --}}
-                <div class="buy-main" id="productList"></div>
+                {{--
+                Div and button for loading more products beyong the initial n that is there on start up
+                loadMore calls the ajax function in Ajax.js, which then request data from the database through
+                the AjaxController method LimitShowing
+                --}}
+                <div id="productList" class="buy-main"></div>
 
                 <button id="loadMore" class="btnAjax ">Load more products</button>
             </div>
 
         </div>
     </div>
-
-
-
 
 @endsection
 
