@@ -4,6 +4,7 @@
     <script defer src="{{asset('js/cookieManager.js')}}"></script>
     <script defer src="{{asset('js/ajax.js')}}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{asset('css/ajax.css')}}"
 
 @endsection
 
@@ -48,8 +49,17 @@
 
     <div>
         <h1>Buy Local Organic Products</h1>
+        <div>
+            {{--
+                    The names of the product currently go by database name and not "screen name"
+                    meaning that if you want to search for Beef Sausage it has to be beef_sausage
+                    as that is its name in the database
+            --}}
+            <input type="text" id="searchField" class="searchAjax" placeholder="search">
+            <div id="productList" class="buy-main"></div>
+        </div>
+        <div class="buy-main" id="initialList">
 
-        <div class="buy-main">
             {{--
             This loads the initial n products, where n is chosen in the AjaxController, if
             it isnt limited, it will just load all products, which isnt really wanted
@@ -71,21 +81,13 @@
     --}}
                 <div class="buy-main" id="productList"></div>
 
-                <button id="loadMore">Load more products</button>
+                <button id="loadMore" class="btnAjax ">Load more products</button>
             </div>
 
         </div>
     </div>
 
-    <div>
-{{--
-        The names of the product currently go by database name and not "screen name"
-        meaning that if you want to search for Beef Sausage it has to be beef_sausage
-        as that is its name in the database
---}}
-        <input type="text" id="searchField" placeholder="search">
-        <div id="productList"></div>
-    </div>
+
 
 
 @endsection
