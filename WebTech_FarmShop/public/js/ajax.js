@@ -1,5 +1,7 @@
 //global var for offsetting loaded items, so no replicates from database
-var offset = 6;
+var offset = 3;
+//array to keep track of loaded products
+var loadedProducts = [];
 //Function for incrementing showed products with an ajax call
 $(document).ready(function () {
     $(document).on('click', '#loadMore', function () {
@@ -18,13 +20,14 @@ $(document).ready(function () {
                 * remaking it.
                 */
                 $('#productList').append(response.html);
-                offset += 6;
+                //stuff loaded products into array to load after search
+                loadedProducts.push(response.html)
+                offset += 3;
                 //console.log(response);
                 console.log(offset)
 
-                //hides button, if the database sends nothing back aka its gone
-                //through all products
-                if (response.SENDSTUFF.length === 0) {
+                //hides button, if ::count(); = 0
+                if (offset >= response.total) {
                     $('#loadMore').hide();
                 }
 
@@ -54,18 +57,18 @@ $(document).ready(function () {
                 }
             });
         } else if ($('#searchField').val() === '') {
-            //hide searched items when query is empty
-            $('#productList').html("");
+            //load loaded products again
+            $('#productList').html(loadedProducts.join(''));
             //show initial products again
             $('#initialList').html(initialSearchedProducts);
             //show button if it for some reason decided to hide again
             //feels random if it shows up or not again without this
             $('#loadMore').show();
-            //set offset back to 6, as to let the load know we are back to the
+            //set offset back to 3, as to let the load know we are back to the
             //beginning, should prob do something along the lines of saving where the load
             //got to, and then reloading it after the search, but like damn
             //i got no clue how to do that
-            offset = 6;
+            //offset = 3;
             console.log("i got to here");
         }
     });

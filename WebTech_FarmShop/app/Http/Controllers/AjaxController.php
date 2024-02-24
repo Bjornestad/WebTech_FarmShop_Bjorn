@@ -38,6 +38,7 @@ class AjaxController extends Controller
     {
         $offset = $request->input('offset', 0);
         $products = Product::skip($offset)->take(3)->get();
+        $totalProducts = Product::count();
 
         if($request->ajax()){
             $view = '';
@@ -52,7 +53,7 @@ class AjaxController extends Controller
                 ])->render();
             }
 
-            return response()->json(['html' => $view, 'SENDSTUFF'=>$products, "Info got sent from limit show"]);
+            return response()->json(['html' => $view, 'SENDSTUFF'=>$products, "Info got sent from limit show", 'total' => $totalProducts]);
         }
         return view('buyAjax',['SENDSTUFF'=>$products]);
         //return view('buyAjax', compact('products'));

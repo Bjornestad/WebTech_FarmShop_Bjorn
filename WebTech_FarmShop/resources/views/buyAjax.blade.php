@@ -50,7 +50,6 @@
                     @endforeach
                 </div>
 
-                <div id="searchResultList" class="buy-main"></div>
 
                 <div id="productList" class="buy-main"></div>
 
