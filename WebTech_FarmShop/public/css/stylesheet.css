@@ -98,7 +98,7 @@ textarea {
 
 .buy-main {
     display: flex;
-    margin: 30px;
+    margin: 15px;
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;

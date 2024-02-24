@@ -53,7 +53,7 @@ $(document).ready(function () {
                     console.log(query);
                 }
             });
-        } else if ($('#searchField').empty()) {
+        } else if ($('#searchField').val() === '') {
             //hide searched items when query is empty
             $('#productList').html("");
             //show initial products again
