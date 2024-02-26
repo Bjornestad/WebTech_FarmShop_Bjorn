@@ -52,7 +52,7 @@
 
 
                 <div id="productList" class="buy-main"></div>
-
+                <div id="loadingText" style="display: none;" class="center">Loading...</div>
                 <button id="loadMore" class="btnAjax">Load more products</button>
             </div>
         </div>

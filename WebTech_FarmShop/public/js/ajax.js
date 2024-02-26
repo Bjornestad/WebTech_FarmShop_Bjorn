@@ -5,11 +5,13 @@ var loadedProducts = [];
 //Function for incrementing showed products with an ajax call
 $(document).ready(function () {
     $(document).on('click', '#loadMore', function () {
+        $('#loadingText').show();
         $.ajax({
             url: '/buyAjax',
             type: 'GET',
             data: {offset: offset},
             success: function (data) {
+                $('#loadingText').hide();
                 /*entire html "object"? not sure to call it that or not
                 *gets sent to this function, and gets appended to the page
                 * would assume its bad practise to send the entire object
@@ -33,6 +35,7 @@ $(document).ready(function () {
 
             },
             error: function (xhr, status, error) {
+                $('#loadingText').hide();
                 console.error(error);
             }
         });
