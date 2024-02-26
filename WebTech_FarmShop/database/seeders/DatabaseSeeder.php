@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(2)->create();
-        Stock::factory(6)->create();
+        Stock::factory(16)->create();
         $testUser = new User();
         $testUser->name = "test";
         $testUser->email = "test@test";
@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
         $testUser->isAdmin = true;
         $testUser->save();
 
-        $arr = ["roast", "steaks", "beef_sausages", "minced_beef", "potatoes", "beef_salami"];
-        $productDescrip = ["The famous organic roast - you must taste this!", "Best steaks in Europe! Voted by local population!", "The greatest organic meat, made into sausages!", "Fresh, quality ground beef from a local farm, grass fed!", "Organic potatoes, grown right here on the farm!", "Salami, but made from a cow. Both healthier and tastier!"];
+        $arr = ["roast", "steaks", "beef_sausages", "minced_beef", "potatoes", "beef_salami","one","two","three","four","five","six","seven","eight","nine","ten"];
+        $productDescrip = ["The famous organic roast - you must taste this!", "Best steaks in Europe! Voted by local population!", "The greatest organic meat, made into sausages!", "Fresh, quality ground beef from a local farm, grass fed!", "Organic potatoes, grown right here on the farm!", "Salami, but made from a cow. Both healthier and tastier!", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
         for ($i = 0; $i < count($arr); $i++) {
             $ent = new Picture();

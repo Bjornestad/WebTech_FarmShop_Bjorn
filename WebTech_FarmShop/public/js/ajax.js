@@ -9,7 +9,7 @@ $(document).ready(function () {
             url: '/buyAjax',
             type: 'GET',
             data: {offset: offset},
-            success: function (response) {
+            success: function (data) {
                 /*entire html "object"? not sure to call it that or not
                 *gets sent to this function, and gets appended to the page
                 * would assume its bad practise to send the entire object
@@ -19,15 +19,15 @@ $(document).ready(function () {
                 * instead, but this was about expanding the original project, and not
                 * remaking it.
                 */
-                $('#productList').append(response.html);
+                $('#productList').append(data.html);
                 //stuff loaded products into array to load after search
-                loadedProducts.push(response.html)
+                loadedProducts.push(data.html)
                 offset += 3;
-                //console.log(response);
+                //console.log(data);
                 console.log(offset)
 
                 //hides button, if ::count(); = 0
-                if (offset >= response.total) {
+                if (offset >= data.total) {
                     $('#loadMore').hide();
                 }
 
